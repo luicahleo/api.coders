@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique(); //que sea unico porque usaremos el slug como identificador
             $table->text('extract');
             $table->longText('body');
             $table->enum('status',[Post::BORRADOR,Post::PUBLICADO])->default(Post::BORRADOR); //en este campo solo pueden ir estos dos valores, por defecto lleva el 1 que es BORRADOR
