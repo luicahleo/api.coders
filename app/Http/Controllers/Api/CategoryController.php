@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return $categories;
     }
 
     /**
@@ -26,7 +28,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255|unique:categories' //unico en la tabla categories
+        ]);
+
+        //despues de pasar la validacion, creamos, no tenemos que olvidarnos de asignar tambien la asignacion masiva en el modelo
+        $category = Category::create($request->all()); //
+
+        return $category;
     }
 
     /**
@@ -37,7 +47,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+       return $category;
     }
 
     /**
@@ -49,7 +59,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255|unique:categories,slug,' . $category->id //unico en la tabla categories, pero con unique:categories,slug,' . $category->id´´, le decimos que puede actualizar siempre y cuando no se igual al del resto de los otrso slug
+        ]);
+
+        $category->update($request->all());
+
+        return $category;
     }
 
     /**
@@ -60,6 +77,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return $category;
     }
 }
