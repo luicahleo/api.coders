@@ -15,11 +15,11 @@ class ImageFactory extends Factory
     public function definition()
     {
         
-        $name = $this->faker->unique()->word(20);
+        //$name = $this->faker->unique()->word(20);
 
         return [
             'url' =>'posts/' .  $this->faker->image('public/storage/posts', 640,480, null, false),
-            'slug' =>Str::slug($name)
+            //'slug' =>Str::slug($name)
         ];
     }
 }

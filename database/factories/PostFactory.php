@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'body' => $this->faker->text(2000),
             'status' => $this->faker->randomElement([Post::BORRADOR, Post::PUBLICADO]),
             'category_id' => Category::all()->random()->id,
-            'category_id' => User::all()->random()->id
+            'user_id' => User::all()->random()->id
 
 
 
